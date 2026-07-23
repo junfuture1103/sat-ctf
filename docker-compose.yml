@@ -1,0 +1,70 @@
+# DEEP SAT EXPLOIT - full-chain satellite CTF
+# Ground station (web) -> uplink relay (visibility window) -> flight software (cFS-like pwn)
+#
+#   docker compose up --build
+#
+# Player entry points (exposed):
+#   - Ground station web  : http://localhost:8080
+#   - Uplink relay (TCP)  : localhost:9010
+#   - Scoreboard + 3D GUI : http://localhost:8000
+services:
+  ground-station:
+    build: ./ground-station
+    ports:
+      - "8080:8080"
+    environment:
+      - FLAG_STAGE1=SATCTF{gr0und_st4t10n_0per4t0r_alg_n0ne}
+      - RELAY_HOST=uplink-relay
+      - RELAY_PORT=9010
+      - UPLINK_KEY=UPLINK-TC-2026
+    volumes:
+      - ./config:/config:ro
+      - firmware:/firmware:ro   # firmware image (built by flight-sw) served to operators
+    networks: [ groundnet, spacelink ]
+    restart: unless-stopped
+
+  uplink-relay:
+    build: ./uplink
+    ports:
+      - "9010:9010"
+    environment:
+      - FLAG_STAGE2=SATCTF{sh4d0w_upl1nk_r1de_the_15s_w1nd0w}
+      - FLIGHT_HOST=flight-sw
+      - FLIGHT_PORT=9020
+      - AOS_SECONDS=15
+      - LOS_SECONDS=45
+      - UPLINK_KEY=UPLINK-TC-2026
+    networks: [ spacelink ]
+    depends_on: [ flight-sw ]
+    restart: unless-stopped
+
+  flight-sw:
+    build: ./flight-sw
+    environment:
+      - FLAG_STAGE3A=SATCTF{s0ftware_bus_r0ute_c0nfus10n_acl_trunc}
+      - FLAG_STAGE3B=SATCTF{cFE_1pc_sandb0x_3scap3_full_ch41n_pwn3d}
+      - SCOREBOARD_URL=http://scoreboard:8000
+      - EVENT_TOKEN=orbit-internal-9f3a
+      - SAT_ID=SAT-1
+    volumes:
+      - firmware:/firmware   # stages flight_sw image for the ground station
+    networks: [ spacelink ]
+    restart: unless-stopped
+
+  scoreboard:
+    build: ./scoreboard
+    ports:
+      - "8000:8000"
+    environment:
+      - EVENT_TOKEN=orbit-internal-9f3a
+    volumes:
+      - ./config:/config:ro
+    networks: [ spacelink ]
+    restart: unless-stopped
+
+networks:
+  groundnet:   # internet-facing ground segment
+  spacelink:   # internal RF link + backhaul (not directly reachable by players)
+
+volumes:
+  firmware:    # flight_sw image shared from flight-sw -> ground-station

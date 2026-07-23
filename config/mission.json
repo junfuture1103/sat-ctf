@@ -1,0 +1,87 @@
+{
+  "mission": "DEEP SAT EXPLOIT",
+  "ctf_prefix": "SATCTF",
+  "visibility_window": {
+    "aos_seconds": 15,
+    "los_seconds": 45,
+    "epoch_note": "AOS window opens every (aos+los) seconds, aligned to relay start"
+  },
+  "ground_stations": [
+    {
+      "id": "GS-ORBITAL",
+      "name": "Orbital Ground Segment",
+      "country": "KR",
+      "lat": 36.48,
+      "lon": 127.28,
+      "satellite": "SAT-1",
+      "playable": true,
+      "endpoints": {
+        "ground_station_web": "http://localhost:8080",
+        "uplink_relay_tcp": "localhost:9010",
+        "note": "Start here. Pwn the web mission control, pull the firmware, then uplink to SAT-1."
+      }
+    },
+    {
+      "id": "GS-SVALBARD",
+      "name": "Svalbard Station (SvalSat)",
+      "country": "NO",
+      "lat": 78.23,
+      "lon": 15.4,
+      "satellite": "ARIRANG-9",
+      "playable": false,
+      "endpoints": { "note": "Operational. No open challenge on this pass." }
+    },
+    {
+      "id": "GS-KOUROU",
+      "name": "Kourou Tracking Station",
+      "country": "GF",
+      "lat": 5.16,
+      "lon": -52.65,
+      "satellite": "CHOLLIAN-2",
+      "playable": false,
+      "endpoints": { "note": "Operational. No open challenge on this pass." }
+    },
+    {
+      "id": "GS-CANBERRA",
+      "name": "Canberra Deep Space Complex",
+      "country": "AU",
+      "lat": -35.4,
+      "lon": 148.98,
+      "satellite": "SAT-1",
+      "playable": false,
+      "endpoints": { "note": "Backup downlink for SAT-1." }
+    }
+  ],
+  "satellites": [
+    {
+      "id": "SAT-1",
+      "name": "SAT-1",
+      "type": "EO / SIGINT demonstrator",
+      "orbit": { "altitude_km": 550, "inclination_deg": 97.6, "raan_deg": 20, "phase_deg": 0, "period_s": 30 },
+      "color": "#7dd3fc",
+      "playable": true
+    },
+    {
+      "id": "ARIRANG-9",
+      "name": "ARIRANG-9",
+      "type": "EO",
+      "orbit": { "altitude_km": 685, "inclination_deg": 98.1, "raan_deg": 130, "phase_deg": 90, "period_s": 38 },
+      "color": "#a7f3d0",
+      "playable": false
+    },
+    {
+      "id": "CHOLLIAN-2",
+      "name": "CHOLLIAN-2",
+      "type": "GEO weather",
+      "orbit": { "altitude_km": 1200, "inclination_deg": 6.0, "raan_deg": 300, "phase_deg": 200, "period_s": 55 },
+      "color": "#fcd34d",
+      "playable": false
+    }
+  ],
+  "flags": {
+    "stage1_ground": "SATCTF{gr0und_st4t10n_0per4t0r_alg_n0ne}",
+    "stage2_uplink": "SATCTF{sh4d0w_upl1nk_r1de_the_15s_w1nd0w}",
+    "stage3a_route": "SATCTF{s0ftware_bus_r0ute_c0nfus10n_acl_trunc}",
+    "stage3b_pwn": "SATCTF{cFE_1pc_sandb0x_3scap3_full_ch41n_pwn3d}"
+  }
+}

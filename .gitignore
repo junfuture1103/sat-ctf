@@ -1,0 +1,13 @@
+# transient / build artifacts
+__pycache__/
+*.pyc
+*.log
+.playwright-mcp/
+
+# firmware image downloaded by the exploit
+solution/flight_sw
+flight-sw/firmware/
+
+# local screenshots
+globe-*.png
+page-*.png
