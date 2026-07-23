@@ -45,7 +45,7 @@ def window():
 def forward_to_obc(frame: bytes) -> bytes:
     """Deliver a raw CCSDS frame to the flight software and read all telemetry it
     emits before it closes the link (the OBC may send several TM frames -- e.g. a
-    handler ack followed by a privileged-context message after a sandbox escape)."""
+    handler ack followed by a privileged-context message after a OBC ESCAPE)."""
     s = socket.create_connection((FLIGHT_HOST, FLIGHT_PORT), timeout=8)
     try:
         s.sendall(struct.pack(">H", len(frame)) + frame)

@@ -1,5 +1,5 @@
 /* DEEP SAT EXPLOIT — 3D mission situational-awareness globe.
- * Ground stations are clickable (challenge connection info); satellites orbit,
+ * GROUND ZEROs are clickable (challenge connection info); satellites orbit,
  * and a compromised OBC makes its satellite spiral in and burn up on reentry. */
 
 (function () {
@@ -118,7 +118,7 @@
     world.add(new THREE.Points(lg, new THREE.PointsMaterial({ color: 0x2f9e6f, size: 1.6, sizeAttenuation: false })));
   }
 
-  // ---- ground stations ----
+  // ---- GROUND ZEROs ----
   function addStation(gs) {
     var v = llToVec(gs.lat, gs.lon, R * 1.01);
     var color = gs.playable ? 0x7dd3fc : 0x9fb2c8;
@@ -350,7 +350,7 @@
       .then(poll).catch(function () {});
   }
 
-  // ---- ground station info panel ----
+  // ---- GROUND ZERO info panel ----
   var panelStationId = null;
 
   function satStatus(satId) {
@@ -372,7 +372,7 @@
     if (gs.playable) {
       html += '<div style="margin-top:8px"><span class="status play">OPEN CHALLENGE</span></div>';
       if (ep.ground_station_web) html += '<div><span class="k">web mission control</span><br><code>' + ep.ground_station_web + '</code></div>';
-      if (ep.uplink_relay_tcp) html += '<div><span class="k">uplink relay (tcp)</span><br><code>' + ep.uplink_relay_tcp + '</code></div>';
+      if (ep.uplink_relay_tcp) html += '<div><span class="k">SIGNAL PASS (tcp)</span><br><code>' + ep.uplink_relay_tcp + '</code></div>';
       html += '<div class="cta">' + (ep.note || "") + '</div>';
     } else {
       html += '<div class="cta" style="margin-top:10px">' + (ep.note || "No open challenge on this pass.") + '</div>';

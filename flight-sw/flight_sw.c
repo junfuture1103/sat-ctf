@@ -3,13 +3,13 @@
  * ------------------------------------------------------------------------
  * A teaching model of the NASA core Flight System (cFS) command path:
  *
- *   uplink relay --TCP--> [ Command Ingest ] --Software Bus--> [ app ]
+ *   SIGNAL PASS --TCP--> [ Command Ingest ] --Software Bus--> [ app ]
  *
  * Apps are addressed on the Software Bus by their message id, which is derived
  * from the CCSDS APID. Some apps are UNRESTRICTED (telemetry, housekeeping);
  * others are PRIVILEGED and must not be reachable from a raw ground uplink.
  *
- * Two intended defects, mirroring a classic IPC-message sandbox escape:
+ * Two intended defects, mirroring a classic IPC-message OBC ESCAPE:
  *
  *   Stage 3a (logic):  the command router authorizes a message by indexing its
  *                      ACL with (apid & 0xFF) -- the LOW BYTE -- while routing
@@ -23,7 +23,7 @@
  *
  * Built intentionally without stack canaries and without PIE so the challenge
  * is a fair ret2win. The firmware image (this binary, symbols intact) is
- * pulled from the ground station operator console.
+ * pulled from the GROUND ZERO operator console.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -109,7 +109,7 @@ void cfe_es_privileged_exec(void) {
     char msg[1024];
     snprintf(msg, sizeof(msg),
         "\n[cFE_ES] *** PRIVILEGED CONTEXT ENTERED FROM SOFTWARE BUS ***\n"
-        "[cFE_ES] app sandbox escaped -- executing as core flight executive\n"
+        "[cFE_ES] app OBC ESCAPEd -- executing as core flight executive\n"
         "[cFE_ES] attitude control handed to uplink -- %s is DE-ORBITING\n"
         "STAGE3B %s\n", sat, flag);
     send_tm_str(g_client_fd, msg);

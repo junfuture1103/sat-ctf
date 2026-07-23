@@ -139,7 +139,7 @@ def index():
         <div class=card><h2>Operator Console &mdash; UNLOCKED</h2>
         <p>Welcome, operator. Stage 1 clear.</p>
         <p class=flag>{FLAG_STAGE1}</p>
-        <p><b>Uplink relay:</b> tcp <code>{RELAY_HOST}:{RELAY_PORT}</code>
+        <p><b>SIGNAL PASS:</b> tcp <code>{RELAY_HOST}:{RELAY_PORT}</code>
            (exposed to you as <code>localhost:9010</code>)<br>
            <b>Uplink auth key:</b> <code>{UPLINK_KEY}</code><br>
            <b>Flight firmware image:</b> <a href=/firmware>/firmware</a> (pull it &mdash; you'll need it to pwn the OBC)</p>

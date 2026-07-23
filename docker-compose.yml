@@ -1,11 +1,11 @@
 # DEEP SAT EXPLOIT - full-chain satellite CTF
-# Ground station (web) -> uplink relay (visibility window) -> flight software (cFS-like pwn)
+# GROUND ZERO (web) -> SIGNAL PASS (visibility window) -> flight software (cFS-like pwn)
 #
 #   docker compose up --build
 #
 # Player entry points (exposed):
-#   - Ground station web  : http://localhost:8080
-#   - Uplink relay (TCP)  : localhost:9010
+#   - GROUND ZERO web  : http://localhost:8080
+#   - SIGNAL PASS (TCP)  : localhost:9010
 #   - Scoreboard + 3D GUI : http://localhost:8000
 services:
   ground-station:
@@ -47,7 +47,7 @@ services:
       - EVENT_TOKEN=orbit-internal-9f3a
       - SAT_ID=SAT-1
     volumes:
-      - firmware:/firmware   # stages flight_sw image for the ground station
+      - firmware:/firmware   # stages flight_sw image for the GROUND ZERO
     networks: [ spacelink ]
     restart: unless-stopped
 

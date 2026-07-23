@@ -12,7 +12,7 @@ satellite" idea comes from.
 
 ---
 
-## Stage 1 — GROUND ZERO — Ground station: JWT `alg:none`
+## Stage 1 — GROUND ZERO: JWT `alg:none`
 
 **Service:** `ground-station` (Flask), http://localhost:8080
 
@@ -43,7 +43,7 @@ static secret or asymmetric keys.
 
 ---
 
-## Stage 2 — SIGNAL PASS — Uplink relay: the visibility window
+## Stage 2 — SIGNAL PASS: the visibility window
 
 **Service:** `uplink-relay` (TCP), `localhost:9010`
 
@@ -85,7 +85,7 @@ authenticated command links (e.g. CCSDS SDLS) with rolling counters.
 
 ---
 
-## Stage 3a — BUS HIJACK — Software Bus: ACL route confusion
+## Stage 3a — Software Bus: ACL BUS HIJACK
 
 **Service:** `flight-sw` (C OBC), reached through the relay.
 
@@ -119,7 +119,7 @@ truncated index; keep the routing key and the authorization key identical.
 
 ---
 
-## Stage 3b — OBC ESCAPE — OBC pwn: sandbox escape via stack overflow
+## Stage 3b — OBC pwn: OBC ESCAPE via stack overflow
 
 Stage 3a proved you can command a privileged app. `SANDBOX_APP` (`0x204`) is one
 of them, and it "runs" an uploaded ops script — by copying the command payload
@@ -157,10 +157,7 @@ frame   = ccsds.build_tc(apid=0x204, cmd_code=0x0A, payload=payload)
 When `cfe_es_privileged_exec` runs, the OBC POSTs
 `/api/event/compromise` to the scoreboard and **SAT-1 de-orbits in the GUI**.
 
-**Why "sandbox escape":** `SANDBOX_APP` is a restricted app whose stated policy
-is "deny syscalls." By corrupting a Software-Bus-triggered call frame you
-redirect execution into the privileged executive — crossing the app's trust
-boundary exactly as an IPC message that escapes a renderer/OS sandbox does.
+**Why "OBC ESCAPE":** `SANDBOX_APP` is a restricted app whose stated policy is "deny syscalls." By corrupting a Software-Bus-triggered call frame you redirect execution into the privileged executive — crossing the app's trust boundary exactly as an IPC message that escapes a renderer/OS sandbox does.
 
 **Fix:** bounds-check the copy (`memcpy(script, payload, min(len, sizeof script))`),
 compile with stack protector + PIE, and don't ship symbols.

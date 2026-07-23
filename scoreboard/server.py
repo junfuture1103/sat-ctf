@@ -1,7 +1,7 @@
 """
 Mission Operations Scoreboard + 3D situational-awareness GUI.
 
-  GET  /                       -> 3D globe (ground stations + orbiting satellites)
+  GET  /                       -> 3D globe (GROUND ZEROs + orbiting satellites)
   GET  /api/state              -> live mission state (polled by the GUI)
   POST /api/submit             -> submit a flag {team, flag}; final flag de-orbits the sat
   POST /api/event/compromise   -> internal: flight-sw calls this on OBC pwn (token-gated)
